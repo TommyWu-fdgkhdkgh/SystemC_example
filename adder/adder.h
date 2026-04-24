@@ -3,18 +3,18 @@
 
 #include <systemc.h>
 
-SC_MODULE(adder) {
-    sc_in<sc_uint<4> > a;
-    sc_in<sc_uint<4> > b;
-    sc_out<sc_uint<5> > sum;
+SC_MODULE(full_adder) {
+    sc_in<sc_bit> a, b, cin;
+    sc_out<sc_bit> sum, cout;
 
     void do_add() {
-        sum.write(a.read() + b.read());
+        sum.write(a.read() ^ b.read() ^ cin.read());
+        cout.write((a.read() & b.read()) | (b.read() & cin.read()) | (a.read() & cin.read()));
     }
 
-    SC_CTOR(adder) {
+    SC_CTOR(full_adder) {
         SC_METHOD(do_add);
-        sensitive << a << b;
+        sensitive << a << b << cin;
     }
 };
 

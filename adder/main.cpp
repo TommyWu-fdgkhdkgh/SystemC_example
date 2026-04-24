@@ -5,26 +5,33 @@
 
 int sc_main(int argc, char* argv[]) {
     // Signals to connect the modules
-    sc_signal<sc_uint<4> > sig_a;
-    sc_signal<sc_uint<4> > sig_b;
-    sc_signal<sc_uint<5> > sig_sum;
+    sc_signal<sc_bit> sig_a;
+    sc_signal<sc_bit> sig_b;
+    sc_signal<sc_bit> sig_cin;
+    sc_signal<sc_bit> sig_sum;
+    sc_signal<sc_bit> sig_cout;
 
     // Instantiate modules
     driver d("driver");
     monitor m("monitor");
-    adder dut("adder");
+    full_adder dut("adder");
 
     // Connect modules to signals
     dut.a(sig_a);
     dut.b(sig_b);
+    dut.cin(sig_cin);
     dut.sum(sig_sum);
+    dut.cout(sig_cout);
 
     m.m_a(sig_a);
     m.m_b(sig_b);
+    m.m_cin(sig_cin);
     m.m_sum(sig_sum);
+    m.m_cout(sig_cout);
 
     d.d_a(sig_a);
     d.d_b(sig_b);
+    d.d_cin(sig_cin);
 
     // Setup VCD tracing
     sc_trace_file *tf = sc_create_vcd_trace_file("wave");
