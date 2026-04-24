@@ -4,8 +4,8 @@
 #include <systemc.h>
 
 SC_MODULE(full_adder) {
-    sc_in<sc_bit> a, b, cin;
-    sc_out<sc_bit> sum, cout;
+    sc_in<bool> a, b, cin;
+    sc_out<bool> sum, cout;
 
     void do_add() {
         sum.write(a.read() ^ b.read() ^ cin.read());
